@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="@drawable/bg_theme">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_centerInParent="true">
+                <com.ttd.wanandroid.widget.skin.SkinCompatCircleImageView
+                    android:id="@+id/civ_theme"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    app:civ_border_width="2dp"
+                    app:civ_border_color="@color/gray_CDCDCD"
+                    android:src="?attr/colorPrimary"/>
+                <com.ttd.wanandroid.widget.skin.SkinTextView
+                    android:id="@+id/tv_theme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"/>
+            </LinearLayout>
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/tb_theme_setting"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize">
+
+            </android.support.v7.widget.Toolbar>
+        </RelativeLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_pure_color"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

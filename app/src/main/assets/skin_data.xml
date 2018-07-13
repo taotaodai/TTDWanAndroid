@@ -1,0 +1,18 @@
+<SkinListBean>
+    <Skin>
+        <name>蓝色</name>
+        <color>#3F51B5</color>
+        <file></file>
+    </Skin>
+
+    <Skin>
+        <name>棕色</name>
+        <color>#4e3430</color>
+        <file>brown.skin</file>
+    </Skin>
+    <Skin>
+        <name>绿色</name>
+        <color>#259a23</color>
+        <file>green.skin</file>
+    </Skin>
+</SkinListBean>
