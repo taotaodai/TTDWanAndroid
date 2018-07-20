@@ -1,26 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/tb_home"
+        android:id="@+id/tb_architecture"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-        app:navigationIcon="@drawable/ic_menu"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:title="最新博文" />
+        app:title="体系" />
 
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/srl_article"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_article"
             android:layout_width="match_parent"

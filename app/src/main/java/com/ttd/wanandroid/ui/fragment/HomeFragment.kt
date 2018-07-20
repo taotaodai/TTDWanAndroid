@@ -1,4 +1,4 @@
-package com.ttd.wanandroid.ui
+package com.ttd.wanandroid.ui.fragment
 
 import android.os.Bundle
 import android.support.v4.view.GravityCompat
@@ -13,15 +13,19 @@ import com.chinajey.yiyuntong.push.listener.DisposeDataListener
 import com.chinajey.yiyuntong.push.options.DeleteBuilder
 import com.chinajey.yiyuntong.push.options.PushBuilder
 import com.chinajey.yiyuntong.push.request.TargetParams
+import com.gyf.barlibrary.ImmersionBar
 import com.ttd.wanandroid.R
 import com.ttd.wanandroid.base.BaseMVPCompatFragment
+import com.ttd.wanandroid.bean.Article
 import com.ttd.wanandroid.bean.ArticleBean
-import com.ttd.wanandroid.constant.BundleKeyConstant
 import com.ttd.wanandroid.contract.home.HomeContract
 import com.ttd.wanandroid.event.ArticleEvent
 import com.ttd.wanandroid.event.BaseEvent
+import com.ttd.wanandroid.event.NavigationViewEvent
 import com.ttd.wanandroid.presenter.BasePresenter
 import com.ttd.wanandroid.presenter.home.HomePresenter
+import com.ttd.wanandroid.ui.ArticleDetailActivity
+import com.ttd.wanandroid.ui.MainActivity
 import com.ttd.wanandroid.ui.adapter.ArticleItemAdapter
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -46,6 +50,7 @@ class HomeFragment : BaseMVPCompatFragment<HomeContract.HomePresenter, HomeContr
     override fun onLazyInitView(savedInstanceState: Bundle?) {
         super.onLazyInitView(savedInstanceState)
         showModelessLoading()
+        mPresenter.loadArticles()
     }
 
     override fun showModelessLoading() {
@@ -66,9 +71,8 @@ class HomeFragment : BaseMVPCompatFragment<HomeContract.HomePresenter, HomeContr
             srlHome.isRefreshing = false
         }
         adapter = ArticleItemAdapter(R.layout.adapter_article_item, articleBean!!.articleData.articles)
-        rvHome.adapter = adapter
         adapter!!.setOnLoadMoreListener({
-            adapter!!.loadMoreComplete()
+//            adapter!!.loadMoreComplete()
             mPresenter.loadMoreArticles()
         }, rvHome)
 
@@ -77,14 +81,14 @@ class HomeFragment : BaseMVPCompatFragment<HomeContract.HomePresenter, HomeContr
 
             val bundle = Bundle()
             item.position = position
-            bundle.putSerializable(ArticleBean.ArticleData.Article::class.java.simpleName,item)
-//            bundle.putString(BundleKeyConstant.ARG_KEY_ARTICLE_DETAIL_TITLE, item.title)
-//            bundle.putString(BundleKeyConstant.ARG_KEY_ARTICLE_DETAIL_URL, item.link)
+            bundle.putSerializable(Article::class.java.simpleName, item)
             startNewActivity(ArticleDetailActivity::class.java, bundle)
         }
+        rvHome.adapter = adapter
     }
 
     override fun showMoreArticles(articleBean: ArticleBean?) {
+        adapter!!.loadMoreComplete()
         adapter!!.addData(articleBean!!.articleData.articles)
     }
 
@@ -97,32 +101,22 @@ class HomeFragment : BaseMVPCompatFragment<HomeContract.HomePresenter, HomeContr
     }
 
     override fun initUI(view: View?, savedInstanceState: Bundle?) {
-//        mPresenter.loadBanner()
-
         tbHome = view!!.findViewById(R.id.tb_home)
         tbHome.setNavigationOnClickListener {
-            if (!parent.dlMain.isDrawerOpen(GravityCompat.START)) {
-                parent.dlMain.openDrawer(GravityCompat.START)
-            }
+            EventBus.getDefault().post(NavigationViewEvent(NavigationViewEvent.CODE_OPEN))
         }
         parent = activity as MainActivity
-        parent.initStatusBar(R.id.tb_home)
 
         srlHome = view.findViewById(R.id.srl_article)
         srlHome.setOnRefreshListener {
             mPresenter.loadArticles()
         }
         rvHome = view.findViewById(R.id.rv_article)
-        rvHome.layoutManager = LinearLayoutManager(activity)
         adapter = ArticleItemAdapter(R.layout.adapter_article_item)
         rvHome.adapter = adapter
-        mPresenter.loadArticles()
+        rvHome.layoutManager = LinearLayoutManager(activity)
 //        rvHome.addItemDecoration(RecycleViewDivider(activity,LinearLayoutManager.HORIZONTAL,))
 
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
     }
 
     fun pushApiDemo() {
@@ -166,13 +160,14 @@ class HomeFragment : BaseMVPCompatFragment<HomeContract.HomePresenter, HomeContr
 
     override fun onDestroy() {
         super.onDestroy()
-        EventBus.getDefault().register(this)
+        EventBus.getDefault().unregister(this)
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
-    open fun articleEvent(event:ArticleEvent<ArticleBean.ArticleData.Article>){
-        when(event.code){
+    open fun articleEvent(event: ArticleEvent<Article>) {
+        when (event.code) {
             BaseEvent.CODE_REPLACE -> {
-                adapter?.setData(event.position,event.replace)
+                adapter?.setData(event.position, event.replace)
             }
         }
     }

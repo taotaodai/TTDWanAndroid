@@ -3,18 +3,21 @@ package com.ttd.wanandroid.base;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.gyf.barlibrary.ImmersionBar;
 import com.ttd.sdk.GlobalApplication;
+import com.ttd.sdk.wrappers.statusbar.ImmersionBarFactory;
+import com.ttd.sdk.wrappers.statusbar.ImmersionBarWrapper;
+import com.ttd.sdk.wrappers.statusbar.StatusBarOptions;
 import com.ttd.wanandroid.R;
-
-import org.greenrobot.eventbus.EventBus;
 
 import me.yokeyword.fragmentation.SupportFragment;
 
@@ -33,6 +36,7 @@ public abstract class BaseCompatFragment extends SupportFragment {
     protected View vLoading;
     protected View vEmpty;
     protected View vServerAbnormal;
+    protected ImmersionBarWrapper mImmersionBar;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,7 +46,6 @@ public abstract class BaseCompatFragment extends SupportFragment {
         vEmpty = LayoutInflater.from(getContext()).inflate(R.layout.view_empty, null);
         vServerAbnormal = LayoutInflater.from(getContext()).inflate(R.layout.view_server_abnormal,null);
     }
-
 
     @Override
     public void onAttach(Context context) {
@@ -75,7 +78,11 @@ public abstract class BaseCompatFragment extends SupportFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        if (mImmersionBar != null){
+            mImmersionBar.destroy();
+        }
     }
+
 
     @Override
     public void onDetach() {

@@ -7,14 +7,20 @@ import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.NavigationView
 import android.support.v4.app.ActivityCompat
 import android.support.v4.view.GravityCompat
-import android.support.v4.view.ViewPager
 import android.support.v4.widget.DrawerLayout
 import com.ashokvarma.bottomnavigation.BottomNavigationBar
 import com.ttd.wanandroid.R
-import com.ttd.wanandroid.adapter.SectionsPagerAdapter
 import com.ttd.wanandroid.base.BaseCompatActivity
+import com.ttd.wanandroid.event.NavigationViewEvent
+import com.ttd.wanandroid.ui.fragment.ArchitectureFragment
+import com.ttd.wanandroid.ui.fragment.HomeFragment
+import com.ttd.wanandroid.ui.fragment.NavigationFragment
+import com.ttd.wanandroid.ui.fragment.ProjectFragment
 import com.ttd.wanandroid.utils.BottomNavigationViewHelper
 import me.yokeyword.fragmentation.SupportFragment
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
  * Created by wt on 2018/6/30.
@@ -23,11 +29,16 @@ class MainActivity : BaseCompatActivity(), BottomNavigationBar.OnTabSelectedList
 
     var fragments: List<SupportFragment> = listOf()
     lateinit var dlMain: DrawerLayout
-    lateinit var vpMain: ViewPager
     lateinit var bnvMain: BottomNavigationView
     lateinit var nvMain: NavigationView
 
+    val FIRST = 0
+    val SECOND = 1
+    val THIRD = 2
+    val FOURTH = 3
+
     override fun initView(savedInstanceState: Bundle?) {
+        EventBus.getDefault().register(this)
         dlMain = findViewById(R.id.dl_main)
         nvMain = findViewById(R.id.nv_menu)
 //        nvMain.itemIconTintList = null
@@ -35,6 +46,7 @@ class MainActivity : BaseCompatActivity(), BottomNavigationBar.OnTabSelectedList
         nvMain.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.menu_item_theme -> {
+                    closeNavigationView()
                     gotoThemeSetting()
                 }
             }
@@ -47,6 +59,11 @@ class MainActivity : BaseCompatActivity(), BottomNavigationBar.OnTabSelectedList
 
     override fun getLayoutId(): Int {
         return R.layout.activity_main
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        EventBus.getDefault().unregister(this)
     }
 
     @SuppressLint("ResourceType")
@@ -69,16 +86,16 @@ class MainActivity : BaseCompatActivity(), BottomNavigationBar.OnTabSelectedList
 
             when (it.itemId) {
                 R.id.menu_item_home -> {
-                    showHideFragment(fragments[0])
+                    showHideFragment(fragments[FIRST])
                 }
-                R.id.menu_item_system -> {
-                    showHideFragment(fragments[1])
+                R.id.menu_item_architecture -> {
+                    showHideFragment(fragments[SECOND])
                 }
                 R.id.menu_item_navigation -> {
-                    showHideFragment(fragments[2])
+                    showHideFragment(fragments[THIRD])
                 }
                 R.id.menu_item_project -> {
-                    showHideFragment(fragments[3])
+                    showHideFragment(fragments[FOURTH])
                 }
             }
             true
@@ -86,14 +103,14 @@ class MainActivity : BaseCompatActivity(), BottomNavigationBar.OnTabSelectedList
     }
 
     private fun initFragments() {
-        vpMain = findViewById(R.id.vp_main)
         fragments += HomeFragment()
-        fragments += SystemFragment()
+        fragments += ArchitectureFragment()
         fragments += NavigationFragment()
         fragments += ProjectFragment()
 
-        vpMain.adapter = SectionsPagerAdapter(supportFragmentManager, fragments)
-        vpMain.currentItem = 0
+
+        loadMultipleRootFragment(R.id.fl_container, FIRST,
+                fragments[FIRST], fragments[SECOND], fragments[THIRD], fragments[FOURTH])
     }
 
     override fun onTabReselected(position: Int) {
@@ -103,16 +120,37 @@ class MainActivity : BaseCompatActivity(), BottomNavigationBar.OnTabSelectedList
     }
 
     override fun onTabSelected(position: Int) {
-        vpMain.currentItem = position
+
     }
 
     override fun initStatusBar() {
-//        initStatusBarByView(R.id.v_status_bar)
+        initStatusBarByView(R.id.v_status_bar)
     }
 
-    fun gotoThemeSetting() {
-        dlMain.closeDrawer(GravityCompat.START)
+    private fun openNavigationView(){
+        if (!dlMain.isDrawerOpen(GravityCompat.START)){
+            dlMain.openDrawer(GravityCompat.START)
+        }
+    }
+    private fun closeNavigationView() {
+        if (dlMain.isDrawerOpen(GravityCompat.START)){
+            dlMain.closeDrawer(GravityCompat.START)
+        }
+    }
+
+    private fun gotoThemeSetting() {
         ActivityCompat.startActivity(this@MainActivity, Intent(this@MainActivity, ThemeSettingActivity::class.java), null)
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    open fun navigationViewEvent(event: NavigationViewEvent) {
+        when (event.code) {
+            NavigationViewEvent.CODE_CLOSE -> {
+                closeNavigationView()
+            }
+            NavigationViewEvent.CODE_OPEN ->{
+                openNavigationView()
+            }
+        }
+    }
 }

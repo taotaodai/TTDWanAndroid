@@ -15,6 +15,6 @@ import io.reactivex.Observable;
 public class LoginModel implements LoginContract.ILoginModel{
     @Override
     public Observable<UserBean> login(String username,String password) {
-        return RetrofitCreateHelper.init(true).createApi(Api.class, Api.HOST).login(username,password).compose(RxHelper.<UserBean>rxSchedulerHelper());
+        return RetrofitCreateHelper.init(true).createApi(Api.class, Api.HOST).login(username,password).compose(RxHelper.rxSchedulerHelper());
     }
 }

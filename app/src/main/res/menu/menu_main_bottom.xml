@@ -6,9 +6,9 @@
         android:title="主页" />
 
     <item
-        android:id="@+id/menu_item_system"
+        android:id="@+id/menu_item_architecture"
         android:icon="@drawable/ic_bottom_system"
-        android:title="系统" />
+        android:title="体系" />
 
     <item
         android:id="@+id/menu_item_navigation"

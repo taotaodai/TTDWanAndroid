@@ -1,11 +1,10 @@
-package com.ttd.wanandroid.model;
+package com.ttd.wanandroid.model.article;
 
 import com.ttd.sdk.helper.RetrofitCreateHelper;
 import com.ttd.sdk.helper.RxHelper;
 import com.ttd.wanandroid.api.Api;
 import com.ttd.wanandroid.bean.BaseBean;
-import com.ttd.wanandroid.bean.UserBean;
-import com.ttd.wanandroid.contract.ArticleDetailContract;
+import com.ttd.wanandroid.contract.article.ArticleDetailContract;
 
 import io.reactivex.Observable;
 
@@ -17,6 +16,12 @@ public class ArticleDetailModel implements ArticleDetailContract.IArticleDetailM
     @Override
     public Observable<BaseBean> collectArticle(int id) {
         return RetrofitCreateHelper.init(false).createApi(Api.class,Api.HOST).collect(id).
+                compose(RxHelper.<BaseBean>rxSchedulerHelper());
+    }
+
+    @Override
+    public Observable<BaseBean> uncollectArticle(int id) {
+        return RetrofitCreateHelper.init(false).createApi(Api.class,Api.HOST).uncollect(id).
                 compose(RxHelper.<BaseBean>rxSchedulerHelper());
     }
 }

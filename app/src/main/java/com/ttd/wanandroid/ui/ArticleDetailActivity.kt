@@ -6,8 +6,9 @@ import android.view.Menu
 import android.view.View
 import com.bumptech.glide.Glide
 import com.ttd.wanandroid.R
+import com.ttd.wanandroid.bean.Article
 import com.ttd.wanandroid.bean.ArticleBean
-import com.ttd.wanandroid.contract.ArticleDetailContract
+import com.ttd.wanandroid.contract.article.ArticleDetailContract
 import com.ttd.wanandroid.event.ArticleEvent
 import com.ttd.wanandroid.event.BaseEvent
 import com.ttd.wanandroid.presenter.BasePresenter
@@ -19,8 +20,13 @@ import org.greenrobot.eventbus.EventBus
  */
 class ArticleDetailActivity : BaseWebViewLoadActivity<ArticleDetailContract.ArticleDetailPresenter, ArticleDetailContract.IArticleDetailModel>()
         , ArticleDetailContract.IArticleDetailView {
+
+    override fun gotoLogin() {
+        startActivity(LoginActivity::class.java)
+    }
+
     override fun showCollectResult(collect: Boolean) {
-        article!!.isCollect = collect
+        article?.isCollect = collect
 
         EventBus.getDefault().post(ArticleEvent(BaseEvent.CODE_REPLACE, article!!.position, article))
         if (collect) {
@@ -53,13 +59,13 @@ class ArticleDetailActivity : BaseWebViewLoadActivity<ArticleDetailContract.Arti
 
     //    private var mTitle: String? = null
 //    private var mUrl: String? = null
-    private var article: ArticleBean.ArticleData.Article? = null
+    private var article: Article? = null
 
     override fun initData() {
         super.initData()
         val bundle = intent.extras
         if (bundle != null) {
-            article = bundle.getSerializable(ArticleBean.ArticleData.Article::class.java.simpleName) as ArticleBean.ArticleData.Article?
+            article = bundle.getSerializable(Article::class.java.simpleName) as Article?
 //            mUrl = bundle.getString(BundleKeyConstant.ARG_KEY_ARTICLE_DETAIL_URL)
 //            mTitle = bundle.getString(BundleKeyConstant.ARG_KEY_ARTICLE_DETAIL_TITLE)
         }
@@ -98,7 +104,7 @@ class ArticleDetailActivity : BaseWebViewLoadActivity<ArticleDetailContract.Arti
             when (it.itemId) {
                 R.id.item_article_collect -> {
 //                    startActivity(LoginActivity::class.java)
-                    mPresenter.collectArticle(article!!.id)
+                    mPresenter.collectArticle(article)
                 }
                 R.id.item_article_login -> {
                     startActivity(LoginActivity::class.java)

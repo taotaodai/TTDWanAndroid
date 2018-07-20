@@ -3,6 +3,7 @@ package com.ttd.wanandroid.base;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatDelegate;
@@ -12,6 +13,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.ttd.sdk.GlobalApplication;
 import com.ttd.sdk.utils.AppUtils;
+import com.ttd.sdk.wrappers.statusbar.ImmersionBarFactory;
 import com.ttd.sdk.wrappers.statusbar.ImmersionBarImp;
 import com.ttd.sdk.wrappers.statusbar.StatusBarOptions;
 import com.ttd.wanandroid.R;
@@ -44,25 +46,34 @@ public abstract class BaseCompatActivity extends me.yokeyword.fragmentation.Supp
         init(savedInstanceState);
     }
 
-    @Override
-    public void setContentView(int layoutResID) {
-        super.setContentView(layoutResID);
-
-        initStatusBar();
-    }
-
-    protected void initStatusBar() {
+    public void initStatusBar() {
         immersionBarImp = new ImmersionBarImp();
-        StatusBarOptions options = new StatusBarOptions.Builder()
-                .build();
+        StatusBarOptions options ;
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M){
+            options = new StatusBarOptions.Builder()
+                    .setStatusBarColor(R.color.dark_20)
+                    .build();
+        }else {
+            options = new StatusBarOptions.Builder()
+                    .build();
+        }
         immersionBarImp.initImmersionBar(this, options);
     }
 
     protected void initStatusBarByView(@IdRes int id) {
         immersionBarImp = new ImmersionBarImp();
-        StatusBarOptions options = new StatusBarOptions.Builder()
-                .setStatusBarViewId(id)
-                .build();
+        StatusBarOptions options;
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            options = new StatusBarOptions.Builder()
+                    .setDarkFont(true)
+                    .setStatusBarViewId(id)
+                    .setStatusBarColor(R.color.dark_20).build();
+        } else {
+            options = new StatusBarOptions.Builder()
+                    .setDarkFont(true)
+                    .setStatusBarViewId(id).build();
+
+        }
         immersionBarImp.initImmersionBar(this, options);
     }
 
@@ -82,6 +93,7 @@ public abstract class BaseCompatActivity extends me.yokeyword.fragmentation.Supp
 
     private void init(Bundle savedInstanceState) {
         setContentView(getLayoutId());
+        initStatusBar();
         initData();
         ButterKnife.bind(this);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
