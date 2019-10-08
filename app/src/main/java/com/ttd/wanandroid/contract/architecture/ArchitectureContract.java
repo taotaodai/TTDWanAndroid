@@ -1,8 +1,7 @@
 package com.ttd.wanandroid.contract.architecture;
 
-import com.ttd.wanandroid.base.BaseModel;
+import com.ttd.wanandroid.base.IBaseListView;
 import com.ttd.wanandroid.base.IBaseModel;
-import com.ttd.wanandroid.base.IBaseView;
 import com.ttd.wanandroid.bean.ArchitectureBean;
 import com.ttd.wanandroid.bean.ArticleBean;
 import com.ttd.wanandroid.presenter.BasePresenter;
@@ -29,7 +28,7 @@ public interface ArchitectureContract {
 
     }
 
-    interface IArchitectureView extends IBaseView{
+    interface IArchitectureView extends IBaseListView{
         void showArticles(ArticleBean articleBean);
 
         void showMoreArticles(ArticleBean articleBean);

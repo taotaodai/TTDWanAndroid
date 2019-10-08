@@ -1,7 +1,5 @@
 package com.ttd.wanandroid.event;
 
-import com.ttd.wanandroid.bean.ArticleBean;
-
 /**
  * Created by wt on 2018/7/13.
  */

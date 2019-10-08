@@ -4,8 +4,10 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
+    <uses-permission android:name="com.chinajey.yiyuntong.openapi.permissions.AUTH"/>
+
     <application
-        android:name=".MyApplication"
+        android:name="com.ttd.wanandroid.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -23,15 +25,52 @@
         </activity>
 
         <activity
-            android:name=".ui.LoginActivity"
-            android:theme="@style/LoginTheme" />
+            android:name="com.ttd.wanandroid.ui.LoginActivity"/>
 
-        <activity android:name=".ui.MainActivity" />
+        <activity android:name="com.ttd.wanandroid.ui.MainActivity" />
         <!--主题切换页面-->
-        <activity android:name=".ui.ThemeSettingActivity" />
+        <activity android:name="com.ttd.wanandroid.ui.ThemeSettingActivity" />
+        <!--设置页面-->
+        <activity android:name="com.ttd.wanandroid.ui.SettingActivity"/>
         <!-- 主页博文详情 -->
-        <activity android:name=".ui.ArticleDetailActivity" />
-        <activity android:name=".ui.ImageBrowseActivity" />
+        <activity android:name="com.ttd.wanandroid.ui.ArticleDetailActivity" />
+        <activity android:name="com.ttd.wanandroid.ui.ImageBrowseActivity" />
+        <!--我的收藏页面-->
+        <activity android:name="com.ttd.wanandroid.ui.CollectionArticlesActivity"/>
+
+        <!--<activity android:name="com.ttd.wanandroid.test.AIDLActivity">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
+
+        <!--<receiver android:name=".receiver.NetworkConnectChangedReceiver">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.net.conn.CONNECTIVITY_CHANGE" />-->
+                <!--<action android:name="android.Net.wifi.WIFI_STATE_CHANGED" />-->
+                <!--<action android:name="android.net.wifi.STATE_CHANGE" />-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
+
+        <activity android:name="com.chinajey.yiyuntong.openapi.AuthActivity">
+        </activity>
+
+        <!--<receiver-->
+            <!--android:name="com.chinajey.yiyuntong.openapi.receiver.AuthReceiver"-->
+            <!--android:exported="true"-->
+            <!--android:process=":remote">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="com.chinajey.yiyuntong.openapi.auth" />-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
+
+        <meta-data android:name="client_id"
+            android:value="quhjCZ6VkEErammFap"/>
+        <meta-data android:name="client_secret"
+            android:value="CSbRRsP3UrUAuRfqZJRpks6yqesDLFkb"/>
     </application>
+
+
 
 </manifest>

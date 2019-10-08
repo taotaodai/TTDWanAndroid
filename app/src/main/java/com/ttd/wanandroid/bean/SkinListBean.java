@@ -32,6 +32,9 @@ public class SkinListBean {
         @XStreamAsAttribute()
         @XStreamAlias("file")
         private String file;
+        @XStreamAsAttribute()
+        @XStreamAlias("alias")
+        private String alias;
 
         private boolean isCurrentSkin;
         public String getName() {
@@ -64,6 +67,14 @@ public class SkinListBean {
 
         public void setCurrentSkin(boolean currentSkin) {
             isCurrentSkin = currentSkin;
+        }
+
+        public String getAlias() {
+            return alias;
+        }
+
+        public void setAlias(String alias) {
+            this.alias = alias;
         }
     }
 }

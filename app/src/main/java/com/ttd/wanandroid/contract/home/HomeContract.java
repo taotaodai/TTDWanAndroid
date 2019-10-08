@@ -25,6 +25,8 @@ public interface HomeContract {
         public abstract void loadArticles();
 
         public abstract void loadMoreArticles();
+
+        public abstract void refresh();
     }
 
     interface IHomeModel extends IBaseModel{
@@ -34,8 +36,12 @@ public interface HomeContract {
     }
 
     interface IHomeView extends IBaseListView{
+        void showBanner(BannerBean bannerBean);
+
         void showArticles(ArticleBean articleBean);
 
         void showMoreArticles(ArticleBean articleBean);
+
+        void showRefresh(ArticleBean articleBean);
     }
 }

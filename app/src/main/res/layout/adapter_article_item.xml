@@ -5,33 +5,72 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="3dp"
-    android:layout_margin="10dp">
+    android:layout_margin="8dp"
+    app:contentPadding="8dp"
+    app:cardBackgroundColor="@color/background_item"
+    android:foreground="@drawable/onclick_item_common">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="5dp">
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"/>
-
+        android:orientation="horizontal">
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_weight="1"
+            android:orientation="vertical">
             <TextView
-                android:id="@+id/tv_author"
-                android:layout_width="0dp"
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
-            <TextView
-                android:id="@+id/tv_release_time"
-                android:layout_width="0dp"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/text_main"
+                android:textSize="@dimen/dimen_16sp"
+                android:ellipsize="end"
+                android:maxLines="2" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tv_author"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="@dimen/dimen_12sp"/>
+                <TextView
+                    android:id="@+id/tv_release_time"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="@dimen/dimen_12sp"/>
+            </LinearLayout>
         </LinearLayout>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/v_illustration"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:minHeight="60dp">
+            <ImageView
+                android:id="@+id/iv_illustration"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"/>
+        </android.support.v7.widget.CardView>
+        <!--<ImageView-->
+            <!--android:id="@+id/iv_collect"-->
+            <!--android:layout_width="48dp"-->
+            <!--android:layout_height="48dp"-->
+            <!--android:src="@drawable/ic_collect_empty"-->
+            <!--android:scaleY="0.5"-->
+            <!--android:scaleX="0.5"-->
+            <!--android:layout_toEndOf="@id/tv_title"-->
+            <!--android:layout_alignParentEnd="true"/>-->
     </LinearLayout>
+
 
 </skin.support.widget.SkinCompatCardView>

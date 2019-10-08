@@ -4,10 +4,10 @@ import com.ttd.wanandroid.bean.ArchitectureBean;
 import com.ttd.wanandroid.bean.ArticleBean;
 import com.ttd.wanandroid.bean.BannerBean;
 import com.ttd.wanandroid.bean.BaseBean;
+import com.ttd.wanandroid.bean.HotKeyBean;
 import com.ttd.wanandroid.bean.NavigationBean;
+import com.ttd.wanandroid.bean.ProjectBean;
 import com.ttd.wanandroid.bean.UserBean;
-
-import java.util.Map;
 
 import io.reactivex.Observable;
 import retrofit2.http.Field;
@@ -16,7 +16,6 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
-import retrofit2.http.QueryMap;
 
 /**
  * Created by wt on 2018/7/11.
@@ -88,4 +87,43 @@ public interface Api {
     @GET("navi/json")
     Observable<NavigationBean> getNavigationData();
 
+    /**
+     * 项目分类
+     * @return
+     */
+    @GET("project/tree/json")
+    Observable<ProjectBean> getProjectClassify();
+
+    /**
+     * 项目列表
+     * @param page
+     * @param id
+     * @return
+     */
+    @GET("project/list/{page}/json?cid=294")
+    Observable<ArticleBean> getProjectList(@Path("page") int page,@Query("cid") int id);
+
+    /**
+     * 已收藏的文章列表
+     * @param page
+     * @return
+     */
+    @GET("lg/collect/list/{page}/json")
+    Observable<ArticleBean> getArticleCollections(@Path("page") int page);
+
+    /**
+     * 搜索热词
+     * @return
+     */
+    @GET("/hotkey/json")
+    Observable<HotKeyBean> getHotKeyList();
+
+    /**
+     * 根据关键字搜索
+     * @param page
+     * @param key
+     * @return
+     */
+    @POST("/article/query/{page}/json")
+    Observable<ArticleBean> searchArticlesByKey(@Path("page") int page,@Field("k") String key);
 }

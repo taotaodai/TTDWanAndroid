@@ -2,23 +2,33 @@ package com.ttd.wanandroid.base;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
+import android.graphics.PixelFormat;
+import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
+import com.gyf.barlibrary.ImmersionBar;
 import com.ttd.sdk.GlobalApplication;
 import com.ttd.sdk.utils.AppUtils;
-import com.ttd.sdk.wrappers.statusbar.ImmersionBarFactory;
-import com.ttd.sdk.wrappers.statusbar.ImmersionBarImp;
-import com.ttd.sdk.wrappers.statusbar.StatusBarOptions;
 import com.ttd.wanandroid.R;
+import com.ttd.wanandroid.event.NetworkChangeEvent;
+import com.ttd.wanandroid.event.ThemeEvent;
+import com.ttd.wanandroid.receiver.NetworkConnectChangedReceiver;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.ButterKnife;
 
@@ -33,7 +43,10 @@ public abstract class BaseCompatActivity extends me.yokeyword.fragmentation.Supp
     protected GlobalApplication mApplication;
     protected Context mContext;//全局上下文对象
     protected boolean isTransAnim;
-    protected ImmersionBarImp immersionBarImp;
+    //    protected ImmersionBarImp immersionBarImp;
+    protected ImmersionBar mImmersionBar;
+    protected NetworkConnectChangedReceiver netWorkStateReceiver;
+    protected boolean mCheckNetWork = true; //默认检查网络状态
 
     static {
         //5.0以下兼容vector
@@ -47,54 +60,74 @@ public abstract class BaseCompatActivity extends me.yokeyword.fragmentation.Supp
     }
 
     public void initStatusBar() {
-        immersionBarImp = new ImmersionBarImp();
-        StatusBarOptions options ;
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M){
-            options = new StatusBarOptions.Builder()
-                    .setStatusBarColor(R.color.dark_20)
-                    .build();
-        }else {
-            options = new StatusBarOptions.Builder()
-                    .build();
+        mImmersionBar = ImmersionBar.with(this);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            mImmersionBar.statusBarColor(R.color.dark_20)
+                    .init();
+        } else {
+            mImmersionBar.statusBarDarkFont(false);
+            mImmersionBar.init();
         }
-        immersionBarImp.initImmersionBar(this, options);
+    }
+
+    public void initStatusBar(Toolbar toolbar) {
+        mImmersionBar = ImmersionBar.with(this);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            mImmersionBar.statusBarColor(R.color.dark_20)
+                    .init();
+        } else {
+
+            mImmersionBar.titleBar(toolbar, false)
+                    .statusBarDarkFont(false)
+                    .transparentBar()
+                    .init();
+        }
     }
 
     protected void initStatusBarByView(@IdRes int id) {
-        immersionBarImp = new ImmersionBarImp();
-        StatusBarOptions options;
+        mImmersionBar = ImmersionBar.with(this);
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            options = new StatusBarOptions.Builder()
-                    .setDarkFont(true)
-                    .setStatusBarViewId(id)
-                    .setStatusBarColor(R.color.dark_20).build();
+            mImmersionBar.statusBarDarkFont(true)
+                    .statusBarView(id)
+                    .statusBarColor(R.color.dark_20)
+                    .init();
         } else {
-            options = new StatusBarOptions.Builder()
-                    .setDarkFont(true)
-                    .setStatusBarViewId(id).build();
-
+            mImmersionBar.statusBarDarkFont(false)
+                    .statusBarView(id)
+                    .init();
         }
-        immersionBarImp.initImmersionBar(this, options);
     }
 
     public void initStatusBar(@IdRes int titleBarId) {
-        immersionBarImp = new ImmersionBarImp();
-        StatusBarOptions options = new StatusBarOptions.Builder()
-                .setTitleBarId(titleBarId)
-                .build();
-        immersionBarImp.initImmersionBar(this, options);
+        mImmersionBar = ImmersionBar.with(this);
+        mImmersionBar.titleBar(titleBarId)
+                .statusBarDarkFont(false)
+                .init();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        EventBus.getDefault().unregister(this);
+        unregisterReceiver(netWorkStateReceiver);
+        mImmersionBar.destroy();
     }
 
+    @Override
+    protected void onResume() {
+        netWorkStateReceiver = new NetworkConnectChangedReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(netWorkStateReceiver, filter);
+        super.onResume();
+    }
 
     private void init(Bundle savedInstanceState) {
         setContentView(getLayoutId());
         initStatusBar();
         initData();
+        initTipView();
+        EventBus.getDefault().register(this);
         ButterKnife.bind(this);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         initView(savedInstanceState);
@@ -240,5 +273,76 @@ public abstract class BaseCompatActivity extends me.yokeyword.fragmentation.Supp
      */
     protected void setIsTransAnim(boolean b) {
         isTransAnim = b;
+    }
+
+    public void setCheckNetWork(boolean checkNetWork) {
+        mCheckNetWork = checkNetWork;
+    }
+
+    public boolean isCheckNetWork() {
+        return mCheckNetWork;
+    }
+
+    View mTipView;
+    WindowManager mWindowManager;
+    WindowManager.LayoutParams mLayoutParams;
+
+    private void initTipView() {
+        LayoutInflater inflater = getLayoutInflater();
+        //提示View布局
+        mTipView = inflater.inflate(R.layout.view_network_tip, null);
+        mWindowManager = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
+        mLayoutParams = new WindowManager.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.TYPE_APPLICATION,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                        | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                PixelFormat.TRANSLUCENT);
+        //使用非CENTER时，可以通过设置XY的值来改变View的位置
+        mLayoutParams.gravity = Gravity.TOP;
+        mLayoutParams.x = 0;
+        mLayoutParams.y = 0;
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onNetworkChangeEvent(NetworkChangeEvent event) {
+        hasNetWork(event.isConnected);
+    }
+
+    private void hasNetWork(boolean has) {
+        if (isCheckNetWork()) {
+            if (has) {
+                if (mTipView != null && mTipView.getParent() != null) {
+                    mWindowManager.removeView(mTipView);
+                }
+            } else {
+//                SnackbarUtils.with(getWindow().getDecorView())
+//                        .setMessage("网络异常")
+//                        .setMessageColor(Color.WHITE)
+////                .setBgResource(R.drawable.shape_top_round_rect)
+//                        .setAction("aaa", Color.YELLOW, v -> Toast.makeText(mContext,"aaaa",Toast.LENGTH_SHORT).show())
+//                        .show();
+                if (mTipView.getParent() == null) {
+                    mWindowManager.addView(mTipView, mLayoutParams);
+                }
+            }
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void globalThemeEvent(ThemeEvent event) {
+        switch (event.getCode()) {
+            case ThemeEvent.CODE_NIGHT_MODE:
+                mImmersionBar.statusBarDarkFont(false);
+                mImmersionBar.init();
+                break;
+            case ThemeEvent.CODE_DAY_MODE:
+                mImmersionBar.statusBarDarkFont(true);
+                mImmersionBar.init();
+                break;
+            default:
+                break;
+        }
     }
 }

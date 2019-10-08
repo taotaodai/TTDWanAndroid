@@ -12,7 +12,7 @@ import com.ttd.wanandroid.utils.UserInfoManager
  */
 class ArticleDetailPresenter : ArticleDetailContract.ArticleDetailPresenter() {
     override fun collectArticle(article: Article) {
-        if (UserInfoManager.isLogined()) {
+        if (UserInfoManager.isLoggedIn()) {
             if (article.isCollect){
                 mRxManager.register(mIModel.uncollectArticle(article.id).subscribe({
                     mIView.showCollectResult(false)

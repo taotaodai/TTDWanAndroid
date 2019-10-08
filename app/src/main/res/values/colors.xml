@@ -2,11 +2,26 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#3F51B5</color>
+    <color name="colorAccent">#7986CB</color>
+    <color name="md_background_color">#FFFFFF</color>
+
+    <color name="main_700">#303F9F</color>
+    <color name="main_500">#3F51B5</color>
+    <color name="main_300">#7986CB</color>
+    <color name="main_100">#C5CAE9</color>
+
+    <color name="background">#FFFFFF</color>
+    <color name="background_item">#FFFFFF</color>
 
     <color name="dark_11">#11000000</color>
     <color name="dark_20">#20000000</color>
+    <!--26%透明度-->
+    <color name="dark_42">#42000000</color>
     <color name="dark_50">#50000000</color>
+    <!--54%透明度-->
+    <color name="dark_89">#89000000</color>
+    <!--87%透明度-->
+    <color name="dark_DD">#DD000000</color>
 
     <color name="transparent">#00000000</color>
     <color name="white">#FFFFFF</color>
@@ -14,8 +29,18 @@
     <color name="gray_CDCDCD">#CDCDCD</color>
     <color name="gray_8A8A8A">#8A8A8A</color>
     <color name="gray_515151">#515151</color>
+    <color name="gray_424242">#424242</color>
 
+    <color name="text_main">#222222</color>
+    <color name="text_secondary">#767676</color>
 
-    <color name="green_259B24">#259B24</color>
-    <color name="green_0D5302">#0D5302</color>
+    <color name="tab_background">#3F51B5</color>
+    <color name="tab_text">#CDCDCD</color>
+    <color name="tab_text_selected">#FFFFFF</color>
+    <color name="side_item_color">#3F51B5</color>
+    <!--导航页颜色资源-->
+    <color name="navigation_bg">#259B24</color>
+    <color name="navigation_checked">#0D5302</color>
+    <color name="navigation_bg_tag"></color>
+    <color name="navigation_text_classify">#FFFFFF</color>
 </resources>

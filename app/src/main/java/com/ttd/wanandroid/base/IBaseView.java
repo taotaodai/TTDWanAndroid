@@ -1,9 +1,5 @@
 package com.ttd.wanandroid.base;
 
-import android.support.annotation.NonNull;
-
-import com.ttd.wanandroid.presenter.BasePresenter;
-
 /**
  * Created by Horrarndoo on 2017/5/2.
  * fragment base view接口

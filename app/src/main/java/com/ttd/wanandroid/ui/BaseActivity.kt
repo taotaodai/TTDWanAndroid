@@ -3,11 +3,9 @@ package com.ttd.wanandroid.ui
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.support.annotation.IdRes
-import android.support.v7.app.AppCompatActivity
 import com.ttd.sdk.wrappers.statusbar.ImmersionBarImp
 import com.ttd.sdk.wrappers.statusbar.StatusBarOptions
 import me.yokeyword.fragmentation.SupportActivity
-import skin.support.SkinCompatManager
 
 /**
  * Created by wt on 2018/6/30.

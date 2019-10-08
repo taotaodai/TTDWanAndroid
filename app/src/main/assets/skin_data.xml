@@ -1,18 +1,21 @@
 <SkinListBean>
     <Skin>
-        <name>蓝色</name>
+        <name>靛蓝色</name>
         <color>#3F51B5</color>
         <file></file>
+        <alias></alias>
     </Skin>
 
     <Skin>
         <name>棕色</name>
-        <color>#4e3430</color>
+        <color>#795548</color>
         <file>brown.skin</file>
+        <alias>brown</alias>
     </Skin>
     <Skin>
         <name>绿色</name>
-        <color>#259a23</color>
+        <color>#4CAF50</color>
         <file>green.skin</file>
+        <alias>green</alias>
     </Skin>
 </SkinListBean>

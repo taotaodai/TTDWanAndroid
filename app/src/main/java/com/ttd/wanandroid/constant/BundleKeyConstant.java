@@ -9,4 +9,5 @@ public class BundleKeyConstant {
 
     public static final String ARG_KEY_ARTICLE_DETAIL_URL = "arg_key_gankio_detail_url";
     public static final String ARG_KEY_ARTICLE_DETAIL_TITLE = "arg_key_gankio_detail_title";
+
 }

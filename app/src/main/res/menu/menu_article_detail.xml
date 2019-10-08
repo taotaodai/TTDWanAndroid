@@ -6,9 +6,9 @@
         android:icon="@drawable/ic_collect_white"
         android:title="收藏"
         app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/item_article_login"
-        android:icon="@drawable/ic_user"
-        android:title="登录"
-        app:showAsAction="ifRoom"/>
+    <!--<item-->
+        <!--android:id="@+id/item_article_login"-->
+        <!--android:icon="@drawable/ic_user"-->
+        <!--android:title="登录"-->
+        <!--app:showAsAction="ifRoom"/>-->
 </menu>

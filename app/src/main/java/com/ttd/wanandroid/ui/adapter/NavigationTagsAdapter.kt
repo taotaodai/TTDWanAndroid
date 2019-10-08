@@ -1,6 +1,7 @@
 package com.ttd.wanandroid.ui.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import com.ttd.wanandroid.R
 import com.ttd.wanandroid.bean.Article
 import com.ttd.wanandroid.bean.NavigationBean
 import com.ttd.wanandroid.event.NavigationEvent
+import com.ttd.wanandroid.ui.ArticleDetailActivity
 import com.ttd.wanandroid.widget.architecture.SectionedBaseAdapter
 import org.greenrobot.eventbus.EventBus
 
@@ -18,18 +20,23 @@ import org.greenrobot.eventbus.EventBus
  */
 class NavigationTagsAdapter : SectionedBaseAdapter<Article> {
     override fun onHeaderChange(firstVisibleItem: Int) {
-        EventBus.getDefault().post(NavigationEvent(NavigationEvent.CODE_CHANGE_CLASSIFY,getSectionForPosition(firstVisibleItem)))
+        EventBus.getDefault().post(NavigationEvent(NavigationEvent.CODE_CHANGE_CLASSIFY, getSectionForPosition(firstVisibleItem)))
     }
 
     var dataList: MutableList<NavigationBean.Classify>? = null
 
-    constructor(context: Context?, mDatas: MutableList<NavigationBean.Classify>?, itemLayoutId: Int) : super(context, mDatas!![0].articles, itemLayoutId){
+    constructor(context: Context?, mDatas: MutableList<NavigationBean.Classify>?, itemLayoutId: Int) : super(context, mDatas!![0].articles, itemLayoutId) {
         this.dataList = mDatas
     }
 
     override fun convert(helper: ViewHolder?, item: Article?, position: Int, parent: ViewGroup?) {
         var tvTag = helper!!.getView<TextView>(R.id.tv_tag)
         tvTag.text = item!!.title
+        tvTag.setOnClickListener {
+            val intent = Intent(mContext, ArticleDetailActivity::class.java)
+            intent.putExtra(Article::class.java.simpleName, item)
+            mContext.startActivity(intent)
+        }
     }
 
     override fun getItem(section: Int, position: Int): Article {
@@ -53,7 +60,8 @@ class NavigationTagsAdapter : SectionedBaseAdapter<Article> {
     }
 
     override fun getSectionHeaderView(section: Int, convertView: View?, parent: ViewGroup?): View {
-        var layout: LinearLayout? = null
+        var layout: LinearLayout?
+        val item = dataList!![section]
         if (convertView == null) {
             val inflator = parent!!.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             layout = inflator.inflate(R.layout.adapter_navigation_header, null) as LinearLayout
@@ -61,7 +69,9 @@ class NavigationTagsAdapter : SectionedBaseAdapter<Article> {
             layout = convertView as LinearLayout
         }
         layout.isClickable = false
-        (layout.findViewById<View>(R.id.tv_title) as TextView).text = dataList!![section].name
+        val tvName = layout.findViewById<TextView>(R.id.tv_title)
+        tvName.text = item.name
+
         return layout
     }
 

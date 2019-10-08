@@ -7,6 +7,14 @@ import com.ttd.wanandroid.model.home.HomeModel
  * Created by wt on 2018/7/11.
  */
 class HomePresenter : HomeContract.HomePresenter() {
+    override fun refresh() {
+        page = 0
+        mRxManager.register(mIModel.getArticles(page).subscribe({
+            mIView.showRefresh(it)
+        }, {
+            print(it.message)
+        }))
+    }
 
     var page: Int = 0
     //    lateinit var articleBean: ArticleBean
@@ -20,7 +28,7 @@ class HomePresenter : HomeContract.HomePresenter() {
 
     override fun loadBanner() {
         mRxManager.register(mIModel.banner.subscribe({
-            it.banners
+            mIView.showBanner(it)
         }, {
             print(it.message)
         }))
@@ -30,7 +38,6 @@ class HomePresenter : HomeContract.HomePresenter() {
 //        if (articles.isEmpty()){
 //            mIView.showEmptyView()
 //        }
-        page = 0
         mRxManager.register(mIModel.getArticles(page).subscribe({
             //            initArticleData(it)
             mIView.showArticles(it)

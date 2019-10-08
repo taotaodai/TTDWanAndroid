@@ -1,7 +1,6 @@
 package com.ttd.wanandroid.contract.article;
 
 import com.ttd.wanandroid.bean.Article;
-import com.ttd.wanandroid.bean.ArticleBean;
 import com.ttd.wanandroid.bean.BaseBean;
 import com.ttd.wanandroid.contract.BaseWebViewLoadContract;
 

@@ -3,6 +3,7 @@ package com.ttd.wanandroid.ui
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.support.v7.widget.Toolbar
 import android.view.WindowManager
 import com.ttd.wanandroid.R
 import com.ttd.wanandroid.base.BaseCompatActivity
@@ -11,8 +12,16 @@ import com.ttd.wanandroid.base.BaseCompatActivity
  * Created by wt on 2018/6/30.
  */
 class SplashActivity : BaseCompatActivity(){
-    override fun initView(savedInstanceState: Bundle?) {
+    var tbSplash: Toolbar?= null
 
+//    override fun initStatusBar() {
+//        ImmersionBar.with(this)
+//                .titleBar(R.id.tb_splash, false)
+//                .transparentBar()
+//                .init()
+//    }
+    override fun initView(savedInstanceState: Bundle?) {
+        tbSplash = findViewById(R.id.tb_splash)
     }
 
     override fun getLayoutId(): Int {

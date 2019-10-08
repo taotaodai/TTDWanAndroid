@@ -13,6 +13,9 @@ class ArchitecturePresenter : ArchitectureContract.ArchitecturePresenter() {
         mRxManager.register(mIModel.getArticlesById(++page, id)
                 .subscribe({
                     mIView.showMoreArticles(it)
+                    if (it.articleData.articles.size == 0){
+                        mIView.showNoMoreView(false)
+                    }
                 }, {
                     print("~~~")
                 }))

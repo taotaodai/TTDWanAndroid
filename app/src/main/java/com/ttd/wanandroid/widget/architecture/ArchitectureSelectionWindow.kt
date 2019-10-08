@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import android.widget.PopupWindow
+import com.ttd.sdk.utils.SerializeUtil
 import com.ttd.wanandroid.R
 import com.ttd.wanandroid.bean.ArchitectureBean
 import com.ttd.wanandroid.event.ArchitectureEvent
@@ -59,7 +60,9 @@ class ArchitectureSelectionWindow(context: Context, data: ArchitectureBean) {
 
     fun showDataList() {
         adapterTop = ArchitectureTopAdapter(R.layout.adapter_architecture_classify, data)
-        adapterSub = ArchitectureSubAdapter(R.layout.adapter_architecture_tags, data!!.architectureList[data!!.position])
+
+        val subData = SerializeUtil.deepCopy(data!!.architectureList[data!!.position]) as ArchitectureBean.Architecture
+        adapterSub = ArchitectureSubAdapter(R.layout.adapter_architecture_tags, subData)
 
         rvTop!!.adapter = adapterTop
         rvSub!!.adapter = adapterSub

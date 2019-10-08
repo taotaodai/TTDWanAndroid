@@ -1,19 +1,21 @@
 package com.ttd.wanandroid.ui
 
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.support.v7.widget.Toolbar
+import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import com.chad.library.adapter.base.BaseQuickAdapter
-import com.gyf.barlibrary.ImmersionBar
 import com.ttd.wanandroid.R
 import com.ttd.wanandroid.base.BaseCompatActivity
 import com.ttd.wanandroid.bean.SkinListBean
+import com.ttd.wanandroid.event.BaseEvent
+import com.ttd.wanandroid.event.ThemeEvent
 import com.ttd.wanandroid.ui.adapter.ThemeSelectionAdapter
-import com.ttd.wanandroid.utils.SkinUtils
-import com.ttd.wanandroid.widget.skin.SkinCompatCircleImageView
+import com.ttd.wanandroid.utils.ThemeUtils
+import org.greenrobot.eventbus.EventBus
 import skin.support.SkinCompatManager
 
 /**
@@ -22,7 +24,7 @@ import skin.support.SkinCompatManager
 class ThemeSettingActivity : BaseCompatActivity() {
 
     lateinit var tbTheme: Toolbar
-    lateinit var civTheme: SkinCompatCircleImageView
+    lateinit var ivTheme: ImageView
     lateinit var tvTheme: TextView
     lateinit var rvTheme: RecyclerView
     lateinit var adapter: ThemeSelectionAdapter
@@ -31,13 +33,13 @@ class ThemeSettingActivity : BaseCompatActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         initTitleBar(tbTheme, "")
-        civTheme = findViewById(R.id.civ_theme)
+        ivTheme = findViewById(R.id.iv_theme)
         tvTheme = findViewById(R.id.tv_theme)
         rvTheme = findViewById(R.id.rv_pure_color)
         rvTheme.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
 
-        themes = SkinUtils.initThemes(this)!!
-        showCurrentSkin(SkinUtils.getCurrentSkin(themes))
+        themes = ThemeUtils.initThemes(this)!!
+        showCurrentSkin(ThemeUtils.getCurrentSkin())
 
         adapter = ThemeSelectionAdapter(R.layout.adapter_theme_item, themes)
         rvTheme.adapter = adapter
@@ -50,7 +52,7 @@ class ThemeSettingActivity : BaseCompatActivity() {
                         temp.isCurrentSkin = false
                     }
                 }
-                changeSkin(item)
+                changeTheme(item)
                 adapter.notifyDataSetChanged()
             }
         }
@@ -63,35 +65,40 @@ class ThemeSettingActivity : BaseCompatActivity() {
     override fun initStatusBar() {
 //        initStatusBar(R.id.tb_theme_setting)
         tbTheme = findViewById(R.id.tb_theme_setting)
-        ImmersionBar.with(this)
-                .titleBar(tbTheme, false)
-                .transparentBar()
-                .init()
+        initStatusBar(tbTheme)
     }
 
     fun showCurrentSkin(skin: SkinListBean.Skin) {
         tvTheme.text = skin.name
+        ivTheme.setBackgroundColor(Color.parseColor(skin.color))
     }
 
-
-    fun changeSkin(skin: SkinListBean.Skin) {
-
-        if (SkinUtils.isDefaultSkin(skin.file)) {
-            SkinCompatManager.getInstance().restoreDefaultTheme()
+    fun changeTheme(skin: SkinListBean.Skin) {
+        if(ThemeUtils.getNightMode()){
             showCurrentSkin(skin)
-        } else {
-            SkinCompatManager.getInstance().loadSkin(skin.file, object : SkinCompatManager.SkinLoaderListener {
-                override fun onStart() {}
+            ThemeUtils.setTheme(skin.alias)
+            EventBus.getDefault().post(ThemeEvent(BaseEvent.CODE_REFRESH))
+        }else{
+            if (ThemeUtils.isDefaultSkin(skin)) {
+                SkinCompatManager.getInstance().restoreDefaultTheme()
+                showCurrentSkin(skin)
+                EventBus.getDefault().post(ThemeEvent(BaseEvent.CODE_REFRESH))
+            } else {
+                SkinCompatManager.getInstance().loadSkin(skin.alias, object : SkinCompatManager.SkinLoaderListener {
+                    override fun onStart() {}
 
-                override fun onSuccess() {
-                    showCurrentSkin(skin)
-                    Toast.makeText(this@ThemeSettingActivity, "换肤成功", Toast.LENGTH_SHORT).show()
-                }
-
-                override fun onFailed(s: String) {}
-            }, SkinCompatManager.SKIN_LOADER_STRATEGY_ASSETS)
-
+                    override fun onSuccess() {
+                        showCurrentSkin(skin)
+                        ThemeUtils.setTheme(skin.alias)
+//                        Toast.makeText(this@ThemeSettingActivity, "换肤成功", Toast.LENGTH_SHORT).show()
+                        EventBus.getDefault().post(ThemeEvent(BaseEvent.CODE_REFRESH))
+                    }
+                    override fun onFailed(s: String) {}
+                }, SkinCompatManager.SKIN_LOADER_STRATEGY_BUILD_IN)
+            }
         }
+
     }
+
 
 }

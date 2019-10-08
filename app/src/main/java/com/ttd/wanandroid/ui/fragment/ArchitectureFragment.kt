@@ -2,12 +2,9 @@ package com.ttd.wanandroid.ui.fragment
 
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
-import android.view.Menu
-import android.view.MenuInflater
 import android.view.View
 import com.ttd.wanandroid.R
 import com.ttd.wanandroid.base.BaseMVPCompatFragment
@@ -29,7 +26,21 @@ import org.greenrobot.eventbus.ThreadMode
 /**
  * Created by wt on 2018/7/2.
  */
-class ArchitectureFragment : BaseMVPCompatFragment<ArchitectureContract.ArchitecturePresenter, ArchitectureContract.IArchitectureModel>(), ArchitectureContract.IArchitectureView {
+class ArchitectureFragment : BaseMVPCompatFragment<ArchitectureContract.ArchitecturePresenter, ArchitectureContract.IArchitectureModel>(),
+        ArchitectureContract.IArchitectureView {
+    override fun showEmptyView() {
+    }
+
+    override fun showNoMoreView(gone: Boolean) {
+        adapter!!.loadMoreEnd(gone)
+    }
+
+    override fun showRefresh() {
+    }
+
+    override fun showRefreshView(refreshing: Boolean) {
+    }
+
     override fun showSubtile(title: String?) {
         tbArchitecture!!.subtitle = title
     }
@@ -46,6 +57,7 @@ class ArchitectureFragment : BaseMVPCompatFragment<ArchitectureContract.Architec
     var rvArchitecture: RecyclerView? = null
     var srlArchitecture: SwipeRefreshLayout? = null
     var adapter: ArticleItemAdapter? = null
+    var pwArchitecture: ArchitectureSelectionWindow? = null
 
     override fun initPresenter(): BasePresenter<*, *> {
         return ArchitecturePresenter()
@@ -58,17 +70,27 @@ class ArchitectureFragment : BaseMVPCompatFragment<ArchitectureContract.Architec
     override fun initUI(view: View?, savedInstanceState: Bundle?) {
         EventBus.getDefault().register(this)
         tbArchitecture = view?.findViewById(R.id.tb_architecture)
-        (activity as AppCompatActivity).setSupportActionBar(tbArchitecture)
-        setHasOptionsMenu(true)
+        tbArchitecture!!.inflateMenu(R.menu.menu_architecture)
+        tbArchitecture!!.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.item_architecture_expand -> {
+                    if (pwArchitecture == null){
+                        pwArchitecture = ArchitectureSelectionWindow(mActivity, (mPresenter as ArchitecturePresenter).architectureData!!)
+                        pwArchitecture!!.init()
+                    }
+                    pwArchitecture!!.show(tbArchitecture!!)
+                }
+            }
+            true
+        }
         srlArchitecture = view?.findViewById(R.id.srl_article)
-        rvArchitecture = view?.findViewById(R.id.rv_article)
+        rvArchitecture = view?.findViewById(R.id.rv_article_architecture)
         srlArchitecture?.setOnRefreshListener {
             mPresenter.loadArticleList()
         }
         rvArchitecture!!.layoutManager = LinearLayoutManager(mContext)
         adapter = ArticleItemAdapter(R.layout.adapter_article_item)
         rvArchitecture!!.adapter = adapter
-        mPresenter.loadArchitectureTree()
     }
 
     override fun onDestroy() {
@@ -80,6 +102,7 @@ class ArchitectureFragment : BaseMVPCompatFragment<ArchitectureContract.Architec
         super.onLazyInitView(savedInstanceState)
 
         showModelessLoading()
+        mPresenter.loadArchitectureTree()
     }
 
     override fun showModelessLoading() {
@@ -109,24 +132,6 @@ class ArchitectureFragment : BaseMVPCompatFragment<ArchitectureContract.Architec
         }
     }
 
-    var pwArchitecture: ArchitectureSelectionWindow? = null
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        super.onCreateOptionsMenu(menu, inflater)
-
-        inflater!!.inflate(R.menu.menu_architecture, menu)
-        tbArchitecture!!.setOnMenuItemClickListener {
-            when (it.itemId) {
-                R.id.item_architecture_expand -> {
-                    if (pwArchitecture == null){
-                        pwArchitecture = ArchitectureSelectionWindow(mActivity, (mPresenter as ArchitecturePresenter).architectureData!!)
-                        pwArchitecture!!.init()
-                    }
-                    pwArchitecture!!.show(tbArchitecture!!)
-                }
-            }
-            true
-        }
-    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     open fun architectureEvent(event: ArchitectureEvent){

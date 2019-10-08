@@ -1,22 +1,27 @@
 package com.ttd.wanandroid.ui
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.NavigationView
-import android.support.v4.app.ActivityCompat
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
+import android.text.TextUtils
+import android.widget.ImageView
+import android.widget.TextView
 import com.ashokvarma.bottomnavigation.BottomNavigationBar
 import com.ttd.wanandroid.R
 import com.ttd.wanandroid.base.BaseCompatActivity
+import com.ttd.wanandroid.event.BaseEvent
 import com.ttd.wanandroid.event.NavigationViewEvent
+import com.ttd.wanandroid.event.UserInfoEvent
 import com.ttd.wanandroid.ui.fragment.ArchitectureFragment
 import com.ttd.wanandroid.ui.fragment.HomeFragment
 import com.ttd.wanandroid.ui.fragment.NavigationFragment
 import com.ttd.wanandroid.ui.fragment.ProjectFragment
 import com.ttd.wanandroid.utils.BottomNavigationViewHelper
+import com.ttd.wanandroid.utils.ThemeUtils
+import com.ttd.wanandroid.utils.UserInfoManager
 import me.yokeyword.fragmentation.SupportFragment
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -27,34 +32,88 @@ import org.greenrobot.eventbus.ThreadMode
  */
 class MainActivity : BaseCompatActivity(), BottomNavigationBar.OnTabSelectedListener {
 
-    var fragments: List<SupportFragment> = listOf()
-    lateinit var dlMain: DrawerLayout
-    lateinit var bnvMain: BottomNavigationView
-    lateinit var nvMain: NavigationView
-
-    val FIRST = 0
-    val SECOND = 1
-    val THIRD = 2
-    val FOURTH = 3
+    private var fragments: List<SupportFragment> = listOf()
+    private lateinit var dlMain: DrawerLayout
+    private lateinit var bnvMain: BottomNavigationView
+    private lateinit var nvMain: NavigationView
+    private var tvUserName: TextView? = null
+    var ivHead: ImageView? = null
+    private val FIRST = 0
+    private val SECOND = 1
+    private val THIRD = 2
+    private val FOURTH = 3
 
     override fun initView(savedInstanceState: Bundle?) {
-        EventBus.getDefault().register(this)
+//        EventBus.getDefault().register(this)
         dlMain = findViewById(R.id.dl_main)
+
+        initNavigationView()
+        initBottomNavigation()
+        initFragments()
+    }
+
+    private fun initNavigationView() {
         nvMain = findViewById(R.id.nv_menu)
-//        nvMain.itemIconTintList = null
-//        nvMain.itemTextColor = null
         nvMain.setNavigationItemSelectedListener { item ->
+            closeNavigationView()
             when (item.itemId) {
-                R.id.menu_item_theme -> {
-                    closeNavigationView()
-                    gotoThemeSetting()
+                R.id.menu_item_collect -> {
+                    if (UserInfoManager.isLoggedIn()) {
+                        startActivity(CollectionArticlesActivity::class.java)
+                    } else {
+                        startActivity(LoginActivity::class.java)
+                    }
                 }
+            //夜间模式
+                R.id.menu_item_night -> {
+                    setNightMode()
+                }
+                R.id.menu_item_setting -> {
+                    startActivity(SettingActivity::class.java)
+                }
+//                R.id.menu_item_quit -> {
+//                    UserInfoManager.logout()
+//                    showUserInfo()
+//                }
             }
             true
         }
+        val header = nvMain.getHeaderView(0)
+        tvUserName = header.findViewById(R.id.tv_username)
+        ivHead = header.findViewById(R.id.iv_head)
+        ivHead!!.setOnClickListener {
+            if (UserInfoManager.isLoggedIn()) {
 
-        initBottomNavigation()
-        initFragments()
+            } else {
+                startActivity(LoginActivity::class.java)
+            }
+        }
+        showUserInfo()
+    }
+
+    private fun setNightMode() {
+        val item = nvMain.menu.findItem(R.id.menu_item_night)
+        if (ThemeUtils.getNightMode()) {
+//            ThemeUtils.setDynamicResOfNight()
+            item.setIcon(R.drawable.ic_night_mode)
+            item.title = getString(R.string.night_mode)
+        } else {
+            item.setIcon(R.drawable.ic_day_mode)
+            item.title = getString(R.string.day_mode)
+//            ThemeUtils.setDynamicResOfDay()
+        }
+        ThemeUtils.setNightMode()
+    }
+
+    private fun showUserInfo() {
+        val username = UserInfoManager.getUserName()
+        if (TextUtils.isEmpty(username)) {
+            tvUserName!!.text = "未登录"
+            ivHead!!.setImageResource(R.drawable.ic_head_logout)
+        } else {
+            tvUserName!!.text = username
+            ivHead!!.setImageResource(R.drawable.ic_head_login)
+        }
     }
 
     override fun getLayoutId(): Int {
@@ -68,16 +127,6 @@ class MainActivity : BaseCompatActivity(), BottomNavigationBar.OnTabSelectedList
 
     @SuppressLint("ResourceType")
     private fun initBottomNavigation() {
-//        bnbMain = findViewById(R.id.bnb_main)
-////        bnbMain.activeColor = android.R.attr.colorPrimary
-//        bnbMain.setMode(BottomNavigationBar.MODE_FIXED)
-//        bnbMain.addItem(BottomNavigationItem(R.drawable.ic_bottom_home, "首页"))
-//        bnbMain.addItem(BottomNavigationItem(R.drawable.ic_bottom_system, "体系"))
-//        bnbMain.addItem(BottomNavigationItem(R.drawable.ic_bottom_navigation, "导航"))
-//        bnbMain.addItem(BottomNavigationItem(R.drawable.ic_bottom_project, "项目"))
-//        bnbMain.setFirstSelectedPosition(0)
-//        bnbMain.initialise()
-//        bnbMain.setTabSelectedListener(this)
 
         bnvMain = findViewById(R.id.bnv_main)
         bnvMain.selectedItemId = R.id.menu_item_home
@@ -127,29 +176,35 @@ class MainActivity : BaseCompatActivity(), BottomNavigationBar.OnTabSelectedList
         initStatusBarByView(R.id.v_status_bar)
     }
 
-    private fun openNavigationView(){
-        if (!dlMain.isDrawerOpen(GravityCompat.START)){
+    private fun openNavigationView() {
+        if (!dlMain.isDrawerOpen(GravityCompat.START)) {
             dlMain.openDrawer(GravityCompat.START)
         }
     }
+
     private fun closeNavigationView() {
-        if (dlMain.isDrawerOpen(GravityCompat.START)){
+        if (dlMain.isDrawerOpen(GravityCompat.START)) {
             dlMain.closeDrawer(GravityCompat.START)
         }
     }
 
-    private fun gotoThemeSetting() {
-        ActivityCompat.startActivity(this@MainActivity, Intent(this@MainActivity, ThemeSettingActivity::class.java), null)
-    }
-
     @Subscribe(threadMode = ThreadMode.MAIN)
-    open fun navigationViewEvent(event: NavigationViewEvent) {
+    fun navigationViewEvent(event: NavigationViewEvent) {
         when (event.code) {
             NavigationViewEvent.CODE_CLOSE -> {
                 closeNavigationView()
             }
-            NavigationViewEvent.CODE_OPEN ->{
+            NavigationViewEvent.CODE_OPEN -> {
                 openNavigationView()
+            }
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun userInfoEvent(event: UserInfoEvent) {
+        when (event.code) {
+            BaseEvent.CODE_REFRESH -> {
+                showUserInfo()
             }
         }
     }

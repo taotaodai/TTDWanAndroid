@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/background">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -13,14 +14,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_centerInParent="true">
-                <com.ttd.wanandroid.widget.skin.SkinCompatCircleImageView
+                android:layout_centerInParent="true"
+                android:id="@+id/linearLayout">
+
+                <android.support.v7.widget.CardView
                     android:id="@+id/civ_theme"
-                    android:layout_width="96dp"
-                    android:layout_height="96dp"
-                    app:civ_border_width="2dp"
-                    app:civ_border_color="@color/gray_CDCDCD"
-                    android:src="?attr/colorPrimary"/>
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    app:cardCornerRadius="36dp">
+                    <ImageView
+                        android:id="@+id/iv_theme"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </android.support.v7.widget.CardView>
                 <com.ttd.wanandroid.widget.skin.SkinTextView
                     android:id="@+id/tv_theme"
                     android:layout_width="wrap_content"

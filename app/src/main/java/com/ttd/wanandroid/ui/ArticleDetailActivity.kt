@@ -7,7 +7,6 @@ import android.view.View
 import com.bumptech.glide.Glide
 import com.ttd.wanandroid.R
 import com.ttd.wanandroid.bean.Article
-import com.ttd.wanandroid.bean.ArticleBean
 import com.ttd.wanandroid.contract.article.ArticleDetailContract
 import com.ttd.wanandroid.event.ArticleEvent
 import com.ttd.wanandroid.event.BaseEvent
@@ -106,9 +105,9 @@ class ArticleDetailActivity : BaseWebViewLoadActivity<ArticleDetailContract.Arti
 //                    startActivity(LoginActivity::class.java)
                     mPresenter.collectArticle(article)
                 }
-                R.id.item_article_login -> {
-                    startActivity(LoginActivity::class.java)
-                }
+//                R.id.item_article_login -> {
+//                    startActivity(LoginActivity::class.java)
+//                }
             }
             true
         }
