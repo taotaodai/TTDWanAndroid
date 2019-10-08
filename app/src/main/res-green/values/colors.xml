@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary_green">@color/main_500_green</color>
+    <color name="colorPrimaryDark_green">@color/main_700_green</color>
+    <color name="colorAccent_green">@color/main_300_green</color>
+
+    <color name="main_700_green">#388E3C</color>
+    <color name="main_500_green">#4CAF50</color>
+    <color name="main_300_green">#81C784</color>
+    <color name="main_100_green">#C8E6C9</color>
+
+    <color name="tab_background_green">#4CAF50</color>
+    <color name="side_item_color_green">#4CAF50</color>
+</resources>

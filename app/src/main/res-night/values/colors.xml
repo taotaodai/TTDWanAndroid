@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary_night">@color/main_500_night</color>
+    <color name="colorPrimaryDark_night">@color/main_700_night</color>
+    <color name="colorAccent_night">@color/main_300_night</color>
+
+    <color name="main_700_night">#000000</color>
+    <color name="main_500_night">#1A1A1A</color>
+    <color name="main_300_night">#616161</color>
+    <color name="main_100_night">#757575</color>
+
+    <color name="background_night">#000000</color>
+    <color name="background_item_night">#1A1A1A</color>
+
+    <color name="text_main_night">#898989</color>
+    <color name="text_secondary_night">#767676</color>
+
+    <color name="tab_background_night">#1A1A1A</color>
+    <color name="side_item_color_night">#898989</color>
+
+    <color name="navigation_bg_night">#000000</color>
+    <color name="navigation_checked_night">#616161</color>
+    <color name="navigation_text_classify_night">#898989</color>
+</resources>
