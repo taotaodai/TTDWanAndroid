@@ -90,4 +90,5 @@
             android:layout_weight="1"
             android:text="获取用户信息"/>
     </LinearLayout>
+
 </FrameLayout>

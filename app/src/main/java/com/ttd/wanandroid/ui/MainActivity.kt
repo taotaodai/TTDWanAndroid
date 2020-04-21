@@ -50,6 +50,7 @@ class MainActivity : BaseCompatActivity(), BottomNavigationBar.OnTabSelectedList
         initNavigationView()
         initBottomNavigation()
         initFragments()
+
     }
 
     private fun initNavigationView() {
