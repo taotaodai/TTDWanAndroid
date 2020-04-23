@@ -3,7 +3,7 @@ package com.ttd.wanandroid.ui
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import android.support.v7.widget.Toolbar
+import androidx.appcompat.widget.Toolbar
 import android.view.WindowManager
 import com.ttd.wanandroid.R
 import com.ttd.wanandroid.base.BaseCompatActivity

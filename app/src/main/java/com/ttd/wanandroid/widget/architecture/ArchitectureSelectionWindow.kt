@@ -2,8 +2,8 @@ package com.ttd.wanandroid.widget.architecture
 
 import android.content.Context
 import android.graphics.drawable.ColorDrawable
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
@@ -25,8 +25,8 @@ class ArchitectureSelectionWindow(context: Context, data: ArchitectureBean) {
     var context: Context? = context
     var data: ArchitectureBean? = data
 
-    var rvTop: RecyclerView? = null
-    var rvSub: RecyclerView? = null
+    var rvTop: androidx.recyclerview.widget.RecyclerView? = null
+    var rvSub: androidx.recyclerview.widget.RecyclerView? = null
     var adapterTop: ArchitectureTopAdapter? = null
     var adapterSub: ArchitectureSubAdapter? = null
 
@@ -35,10 +35,10 @@ class ArchitectureSelectionWindow(context: Context, data: ArchitectureBean) {
         rvTop = rootView!!.findViewById(R.id.rv_top)
         rvSub = rootView!!.findViewById(R.id.rv_sub)
 
-        rvTop!!.layoutManager = LinearLayoutManager(context)
-        rvTop!!.addItemDecoration(RecycleViewDivider(context, RecyclerView.HORIZONTAL))
-        rvSub!!.layoutManager = LinearLayoutManager(context)
-        rvSub!!.addItemDecoration(RecycleViewDivider(context, RecyclerView.HORIZONTAL))
+        rvTop!!.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
+        rvTop!!.addItemDecoration(RecycleViewDivider(context, androidx.recyclerview.widget.RecyclerView.HORIZONTAL))
+        rvSub!!.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
+        rvSub!!.addItemDecoration(RecycleViewDivider(context, androidx.recyclerview.widget.RecyclerView.HORIZONTAL))
 
         showDataList()
 

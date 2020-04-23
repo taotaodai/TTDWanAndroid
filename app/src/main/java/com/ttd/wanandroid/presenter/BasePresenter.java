@@ -1,12 +1,12 @@
 package com.ttd.wanandroid.presenter;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.ttd.sdk.RxManager;
 
 
 /**
- * Created by Horrarndoo on 2017/4/25.
+ * Created by wt on 2017/4/25.
  * <p>
  * base presenter
  */

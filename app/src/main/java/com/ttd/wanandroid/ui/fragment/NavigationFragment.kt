@@ -1,9 +1,9 @@
 package com.ttd.wanandroid.ui.fragment
 
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.Toolbar
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.appcompat.widget.Toolbar
 import android.view.View
 import com.ttd.wanandroid.R
 import com.ttd.wanandroid.base.BaseMVPCompatFragment
@@ -45,7 +45,7 @@ class NavigationFragment : BaseMVPCompatFragment<NavigationPresenter, Navigation
     var tbNavigation: Toolbar? = null
     var adapterClassify: NavigationClassifyAdapter? = null
     var adapterTags: NavigationTagsAdapter? = null
-    var rvClassify: RecyclerView? = null
+    var rvClassify: androidx.recyclerview.widget.RecyclerView? = null
     var lvTags: PinnedHeaderListView? = null
 
     override fun showModelessLoading() {
@@ -72,7 +72,7 @@ class NavigationFragment : BaseMVPCompatFragment<NavigationPresenter, Navigation
         rvClassify = view.findViewById(R.id.rv_classify)
         lvTags = view.findViewById(R.id.lv_tags)
         adapterClassify = NavigationClassifyAdapter(R.layout.adapter_navigation_classify)
-        rvClassify!!.layoutManager = LinearLayoutManager(mContext)
+        rvClassify!!.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(mContext)
         rvClassify!!.adapter = adapterClassify
 //        (activity as AppCompatActivity).setSupportActionBar(tbNavigation)
 //        setHasOptionsMenu(true)

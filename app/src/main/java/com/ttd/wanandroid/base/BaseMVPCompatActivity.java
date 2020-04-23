@@ -1,15 +1,14 @@
 package com.ttd.wanandroid.base;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.ttd.sdk.utils.ToastUtils;
 import com.ttd.wanandroid.presenter.BasePresenter;
 
 
 /**
- * Created by Horrarndoo on 2017/4/6.
- * <p>
+ * Created by wt on 2017/4/6.
  * Mvp Activity基类
  */
 public abstract class BaseMVPCompatActivity<P extends BasePresenter, M extends IBaseModel> extends

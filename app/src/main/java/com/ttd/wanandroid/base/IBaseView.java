@@ -1,7 +1,7 @@
 package com.ttd.wanandroid.base;
 
 /**
- * Created by Horrarndoo on 2017/5/2.
+ * Created by wt on 2017/5/2.
  * fragment base view接口
  */
 

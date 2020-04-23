@@ -1,7 +1,7 @@
 package com.ttd.wanandroid.presenter;
 
 import android.graphics.Bitmap;
-import android.support.v4.app.FragmentActivity;
+import androidx.fragment.app.FragmentActivity;
 import android.webkit.WebView;
 
 import com.bumptech.glide.Glide;
@@ -11,7 +11,7 @@ import com.ttd.sdk.utils.FileUtils;
 import com.ttd.wanandroid.contract.BaseWebViewLoadContract;
 
 /**
- * Created by Horrarndoo on 2017/9/28.
+ * Created by wt on 2017/9/28.
  * <p>
  */
 

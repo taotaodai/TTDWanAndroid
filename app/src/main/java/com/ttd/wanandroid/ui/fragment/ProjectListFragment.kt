@@ -1,9 +1,9 @@
 package com.ttd.wanandroid.ui.fragment
 
 import android.os.Bundle
-import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import com.ttd.wanandroid.R
 import com.ttd.wanandroid.base.BaseMVPCompatFragment
@@ -68,8 +68,8 @@ class ProjectListFragment : BaseMVPCompatFragment<ProjectListContract.ProjectLis
         mPresenter.loadProjects(classify)
     }
 
-    var srlProjects: SwipeRefreshLayout? = null
-    var rvProjects: RecyclerView? = null
+    var srlProjects: androidx.swiperefreshlayout.widget.SwipeRefreshLayout? = null
+    var rvProjects: androidx.recyclerview.widget.RecyclerView? = null
     var adapter: ArticleItemAdapter? = null
     var classify: ProjectBean.Project? = null
     override fun initUI(view: View?, savedInstanceState: Bundle?) {
@@ -78,7 +78,7 @@ class ProjectListFragment : BaseMVPCompatFragment<ProjectListContract.ProjectLis
             mPresenter.loadProjects(classify)
         }
         rvProjects = view.findViewById(R.id.rv_project)
-        rvProjects!!.layoutManager = LinearLayoutManager(mActivity)
+        rvProjects!!.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(mActivity)
         adapter = ArticleItemAdapter(R.layout.adapter_article_item)
         rvProjects!!.adapter = adapter
     }

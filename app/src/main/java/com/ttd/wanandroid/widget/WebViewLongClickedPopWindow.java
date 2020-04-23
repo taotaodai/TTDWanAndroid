@@ -16,7 +16,7 @@ import com.ttd.sdk.utils.ResourcesUtils;
 import com.ttd.wanandroid.R;
 
 /**
- * Created by Horrarndoo on 2017/9/28.
+ * Created by wt on 2017/9/28.
  * <p>
  */
 

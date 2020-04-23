@@ -1,7 +1,7 @@
 package com.ttd.wanandroid.base;
 
 /**
- * Created by Horrarndoo on 2017/4/25.
+ * Created by wt on 2017/4/25.
  * base model接口
  */
 

@@ -1,6 +1,6 @@
 package com.ttd.wanandroid.presenter.article
 
-import android.support.v4.app.FragmentActivity
+import androidx.fragment.app.FragmentActivity
 import android.webkit.WebView
 import com.ttd.wanandroid.bean.Article
 import com.ttd.wanandroid.contract.article.ArticleDetailContract
@@ -42,7 +42,7 @@ class ArticleDetailPresenter : ArticleDetailContract.ArticleDetailPresenter() {
         return ArticleDetailModel()
     }
 
-    override fun saveImageClicked(activity: FragmentActivity?, imgUrl: String?) {
+    override fun saveImageClicked(activity: androidx.fragment.app.FragmentActivity?, imgUrl: String?) {
     }
 
     override fun gotoImageBrowseClicked(imgUrl: String?) {

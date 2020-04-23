@@ -1,10 +1,10 @@
 package com.ttd.wanandroid.ui;
 
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ProgressBar;
+
+import androidx.appcompat.widget.Toolbar;
 
 import com.bm.library.PhotoView;
 import com.bumptech.glide.Glide;
@@ -13,6 +13,7 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.bumptech.glide.request.target.Target;
+import com.google.android.material.snackbar.Snackbar;
 import com.ttd.sdk.helper.RxHelper;
 import com.ttd.sdk.utils.FileUtils;
 import com.ttd.sdk.utils.ResourcesUtils;
@@ -22,25 +23,20 @@ import com.ttd.wanandroid.constant.BundleKeyConstant;
 
 import java.io.File;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.functions.Consumer;
 
 /**
- * Created by Horrarndoo on 2017/9/27.
+ * Created by wt on 2017/9/27.
  * <p>
  * 图片查看Activity，只有加载图片以及保存图片等简单逻辑，不采取MVP框架模式
  */
 
 public class ImageBrowseActivity extends BaseCompatActivity {
-    @BindView(R.id.pv_pic)
     PhotoView pvPic;
-    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.pb_pic_browse)
     ProgressBar pbPicBrowse;
 
     private String mImageUrl;
@@ -56,6 +52,12 @@ public class ImageBrowseActivity extends BaseCompatActivity {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
+        pvPic = findViewById(R.id.pv_pic);
+        toolbar = findViewById(R.id.toolbar);
+        pbPicBrowse = findViewById(R.id.pb_pic_browse);
+        findViewById(R.id.fab_save_pic).setOnClickListener(view -> {
+            saveImageToLocal(mImageUrl);
+        });
         initTitleBar(toolbar,"");
 //        StatusBarUtils.setBarColor(this, Color.BLACK);
         pvPic.enable();
@@ -71,16 +73,6 @@ public class ImageBrowseActivity extends BaseCompatActivity {
         return R.layout.activity_pic_browse;
     }
 
-    @OnClick(R.id.fab_save_pic)
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.fab_save_pic:
-                saveImageToLocal(mImageUrl);
-                break;
-            default:
-                break;
-        }
-    }
 
     /**
      * 保存图片到本地

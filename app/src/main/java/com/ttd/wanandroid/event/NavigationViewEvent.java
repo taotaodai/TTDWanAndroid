@@ -1,7 +1,7 @@
 package com.ttd.wanandroid.event;
 
 /**
- * Created by lml on 2018/7/17.
+ * Created by wt on 2018/7/17.
  */
 
 public class NavigationViewEvent extends BaseEvent {

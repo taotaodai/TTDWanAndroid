@@ -8,9 +8,9 @@ import android.graphics.PixelFormat;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
-import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.IdRes;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,13 +30,9 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import butterknife.ButterKnife;
-
 
 /**
- * Created by Horrarndoo on 2017/9/7.
- * <p>
- * BaseActivity
+ * Created by wt on 2017/9/7.
  */
 
 public abstract class BaseCompatActivity extends me.yokeyword.fragmentation.SupportActivity {
@@ -128,7 +124,6 @@ public abstract class BaseCompatActivity extends me.yokeyword.fragmentation.Supp
         initData();
         initTipView();
         EventBus.getDefault().register(this);
-        ButterKnife.bind(this);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         initView(savedInstanceState);
     }

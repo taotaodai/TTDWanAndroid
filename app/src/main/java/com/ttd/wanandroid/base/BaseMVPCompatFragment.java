@@ -1,7 +1,7 @@
 package com.ttd.wanandroid.base;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.widget.Toast;
 
 import com.ttd.sdk.utils.ToastUtils;
@@ -9,11 +9,10 @@ import com.ttd.wanandroid.presenter.BasePresenter;
 
 
 /**
- * Created by Horrarndoo on 2017/9/6.
+ * Created by wt on 2017/9/6.
  * <p>
  * Mvp Fragment基类
  * <p>
- * 实现IBaseView方法、绑定butterknife
  */
 
 public abstract class BaseMVPCompatFragment<P extends BasePresenter, M extends IBaseModel> extends

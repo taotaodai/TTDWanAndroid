@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.Nullable;
+import androidx.annotation.LayoutRes;
+import androidx.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +18,7 @@ import me.yokeyword.fragmentation.SupportFragment;
 
 
 /**
- * Created by Horrarndoo on 2017/9/26.
- * <p>
+ * Created by wt on 2017/9/26.
  */
 
 public abstract class BaseCompatFragment extends SupportFragment {

@@ -9,7 +9,7 @@ import com.ttd.wanandroid.contract.login.LoginContract;
 import io.reactivex.Observable;
 
 /**
- * Created by lml on 2018/7/13.
+ * Created by wt on 2018/7/13.
  */
 
 public class LoginModel implements LoginContract.ILoginModel{

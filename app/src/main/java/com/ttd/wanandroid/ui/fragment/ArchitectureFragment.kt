@@ -1,10 +1,10 @@
 package com.ttd.wanandroid.ui.fragment
 
 import android.os.Bundle
-import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.Toolbar
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.appcompat.widget.Toolbar
 import android.view.View
 import com.ttd.wanandroid.R
 import com.ttd.wanandroid.base.BaseMVPCompatFragment
@@ -54,8 +54,8 @@ class ArchitectureFragment : BaseMVPCompatFragment<ArchitectureContract.Architec
     }
 
     var tbArchitecture: Toolbar? = null
-    var rvArchitecture: RecyclerView? = null
-    var srlArchitecture: SwipeRefreshLayout? = null
+    var rvArchitecture: androidx.recyclerview.widget.RecyclerView? = null
+    var srlArchitecture: androidx.swiperefreshlayout.widget.SwipeRefreshLayout? = null
     var adapter: ArticleItemAdapter? = null
     var pwArchitecture: ArchitectureSelectionWindow? = null
 
@@ -88,7 +88,7 @@ class ArchitectureFragment : BaseMVPCompatFragment<ArchitectureContract.Architec
         srlArchitecture?.setOnRefreshListener {
             mPresenter.loadArticleList()
         }
-        rvArchitecture!!.layoutManager = LinearLayoutManager(mContext)
+        rvArchitecture!!.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(mContext)
         adapter = ArticleItemAdapter(R.layout.adapter_article_item)
         rvArchitecture!!.adapter = adapter
     }

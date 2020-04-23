@@ -1,8 +1,8 @@
 package com.ttd.wanandroid.widget.skin;
 
 import android.content.Context;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.NonNull;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
 import android.util.AttributeSet;
 
 import skin.support.design.widget.SkinMaterialBottomNavigationView;

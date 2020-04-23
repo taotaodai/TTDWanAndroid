@@ -2,9 +2,9 @@ package com.ttd.wanandroid.ui
 
 import android.graphics.Color
 import android.os.Bundle
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.StaggeredGridLayoutManager
-import android.support.v7.widget.Toolbar
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.appcompat.widget.Toolbar
 import android.widget.ImageView
 import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -26,7 +26,7 @@ class ThemeSettingActivity : BaseCompatActivity() {
     lateinit var tbTheme: Toolbar
     lateinit var ivTheme: ImageView
     lateinit var tvTheme: TextView
-    lateinit var rvTheme: RecyclerView
+    lateinit var rvTheme: androidx.recyclerview.widget.RecyclerView
     lateinit var adapter: ThemeSelectionAdapter
 
     var themes: MutableList<SkinListBean.Skin> = mutableListOf()
@@ -36,7 +36,7 @@ class ThemeSettingActivity : BaseCompatActivity() {
         ivTheme = findViewById(R.id.iv_theme)
         tvTheme = findViewById(R.id.tv_theme)
         rvTheme = findViewById(R.id.rv_pure_color)
-        rvTheme.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        rvTheme.layoutManager = androidx.recyclerview.widget.StaggeredGridLayoutManager(2, androidx.recyclerview.widget.StaggeredGridLayoutManager.VERTICAL)
 
         themes = ThemeUtils.initThemes(this)!!
         showCurrentSkin(ThemeUtils.getCurrentSkin())

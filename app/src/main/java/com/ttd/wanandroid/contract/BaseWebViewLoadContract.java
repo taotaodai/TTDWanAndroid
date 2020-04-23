@@ -1,6 +1,6 @@
 package com.ttd.wanandroid.contract;
 
-import android.support.v4.app.FragmentActivity;
+import androidx.fragment.app.FragmentActivity;
 import android.webkit.WebView;
 
 import com.ttd.wanandroid.base.IBaseActivity;
@@ -9,7 +9,7 @@ import com.ttd.wanandroid.presenter.BasePresenter;
 
 
 /**
- * Created by Horrarndoo on 2017/9/20.
+ * Created by wt on 2017/9/20.
  * <p>
  * webview base contract
  */

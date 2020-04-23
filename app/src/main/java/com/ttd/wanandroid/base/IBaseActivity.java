@@ -1,10 +1,10 @@
 package com.ttd.wanandroid.base;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 /**
- * Created by Horrarndoo on 2017/9/6.
+ * Created by wt on 2017/9/6.
  * <p>
  * BaseActivity接口
  */

@@ -1,16 +1,16 @@
 package com.ttd.wanandroid.widget;
 
 import android.content.Context;
-import android.support.v4.view.MotionEventCompat;
-import android.support.v4.view.NestedScrollingChild;
-import android.support.v4.view.NestedScrollingChildHelper;
-import android.support.v4.view.ViewCompat;
+import androidx.core.view.MotionEventCompat;
+import androidx.core.view.NestedScrollingChild;
+import androidx.core.view.NestedScrollingChildHelper;
+import androidx.core.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.webkit.WebView;
 
 /**
- * Created by Horrarndoo on 2017/9/27.
+ * Created by wt on 2017/9/27.
  * <p>
  * 继承原生WebView，目的是为了和AppBarLayout、CollapsingToolbarLayout等Android Design Support Library控件配合使用。
  * <p>

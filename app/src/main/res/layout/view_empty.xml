@@ -5,7 +5,7 @@
     android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <android.support.v7.widget.AppCompatImageView
+    <androidx.appcompat.widget.AppCompatImageView
         app:srcCompat = "@drawable/ic_vector_empty"
         android:layout_height="80dp"
         android:layout_width="80dp" />

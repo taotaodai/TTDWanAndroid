@@ -2,10 +2,10 @@ package com.ttd.wanandroid.ui
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.support.design.widget.BottomNavigationView
-import android.support.design.widget.NavigationView
-import android.support.v4.view.GravityCompat
-import android.support.v4.widget.DrawerLayout
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationView
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import android.text.TextUtils
 import android.widget.ImageView
 import android.widget.TextView
@@ -33,7 +33,7 @@ import org.greenrobot.eventbus.ThreadMode
 class MainActivity : BaseCompatActivity(), BottomNavigationBar.OnTabSelectedListener {
 
     private var fragments: List<SupportFragment> = listOf()
-    private lateinit var dlMain: DrawerLayout
+    private lateinit var dlMain: androidx.drawerlayout.widget.DrawerLayout
     private lateinit var bnvMain: BottomNavigationView
     private lateinit var nvMain: NavigationView
     private var tvUserName: TextView? = null

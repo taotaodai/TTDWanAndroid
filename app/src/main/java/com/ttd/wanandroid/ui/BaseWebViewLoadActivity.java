@@ -3,9 +3,6 @@ package com.ttd.wanandroid.ui;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -21,6 +18,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.Toolbar;
+
 import com.ttd.sdk.utils.AppUtils;
 import com.ttd.sdk.utils.DisplayUtils;
 import com.ttd.sdk.utils.NetworkConnectionUtils;
@@ -31,13 +30,11 @@ import com.ttd.wanandroid.contract.BaseWebViewLoadContract;
 import com.ttd.wanandroid.widget.NestedScrollWebView;
 import com.ttd.wanandroid.widget.WebViewLongClickedPopWindow;
 
-import butterknife.BindView;
-
 import static com.ttd.wanandroid.constant.BundleKeyConstant.ARG_KEY_IMAGE_BROWSE_URL;
 
 
 /**
- * Created by Horrarndoo on 2017/9/20.
+ * Created by wt on 2017/9/20.
  * <p>
  */
 
@@ -45,25 +42,12 @@ public abstract class BaseWebViewLoadActivity<P extends BaseWebViewLoadContract
         .BaseWebViewLoadPresenter, M extends BaseWebViewLoadContract.IBaseWebViewLoadModel> extends
         BaseMVPCompatActivity<P, M> implements BaseWebViewLoadContract.IBaseWebViewLoadView {
 
-    @BindView(R.id.tv_detail_title)
     TextView tvDetailTitle;
-    @BindView(R.id.iv_detail)
     ImageView ivDetail;
-    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.collapsing_toolbar)
-    CollapsingToolbarLayout collapsingToolbar;
-    @BindView(R.id.app_bar)
-    AppBarLayout appBar;
-    @BindView(R.id.tv_detail_copyright)
-    TextView tvDetailcopyright;
-    @BindView(R.id.nswv_detail_content)
     NestedScrollWebView nswvDetailContent;
-    @BindView(R.id.fl_net_view)
     FrameLayout flNetView;
-    @BindView(R.id.v_network_error)
     View vNetworkError;
-    @BindView(R.id.pb_web)
     ProgressBar pvWeb;
 
     private int downX, downY;
@@ -72,6 +56,14 @@ public abstract class BaseWebViewLoadActivity<P extends BaseWebViewLoadContract
 
     @Override
     protected void initView(Bundle savedInstanceState) {
+
+        tvDetailTitle = findViewById(R.id.tv_detail_title);
+        ivDetail = findViewById(R.id.iv_detail);
+        toolbar = findViewById(R.id.toolbar);
+        nswvDetailContent = findViewById(R.id.nswv_detail_content);
+        flNetView = findViewById(R.id.fl_net_view);
+        vNetworkError = findViewById(R.id.v_network_error);
+        pvWeb = findViewById(R.id.pb_web);
 
 //        initTitleBar(toolbar, "跳转中...");
         initWebSetting(nswvDetailContent.getSettings());
