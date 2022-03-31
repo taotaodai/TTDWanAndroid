@@ -1,11 +1,8 @@
 package com.ttd.wanandroid.ui.fragment
 
 import android.os.Bundle
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.appcompat.widget.Toolbar
 import android.view.View
+import androidx.appcompat.widget.Toolbar
 import com.ttd.wanandroid.R
 import com.ttd.wanandroid.base.BaseMVPCompatFragment
 import com.ttd.wanandroid.bean.Article

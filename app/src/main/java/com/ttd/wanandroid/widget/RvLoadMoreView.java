@@ -10,7 +10,7 @@ import com.ttd.wanandroid.R;
 public class RvLoadMoreView extends LoadMoreView {
     @Override
     public int getLayoutId() {
-        return R.layout.footer_view_loadmore;
+        return R.layout.view_footer_loadmore;
     }
 
     @Override

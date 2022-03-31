@@ -21,7 +21,7 @@ public class ArticleDetailModel implements ArticleDetailContract.IArticleDetailM
 
     @Override
     public Observable<BaseBean> uncollectArticle(int id) {
-        return RetrofitCreateHelper.init(false).createApi(Api.class,Api.HOST).uncollect(id).
+        return RetrofitCreateHelper.init(false).createApi(Api.class,Api.HOST).unCollect(id).
                 compose(RxHelper.<BaseBean>rxSchedulerHelper());
     }
 }

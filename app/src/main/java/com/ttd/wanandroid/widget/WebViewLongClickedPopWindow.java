@@ -93,7 +93,7 @@ public class WebViewLongClickedPopWindow extends PopupWindow {
                 break;
             case IMAGE_VIEW_POPUPWINDOW: //图片
                 longClickedPopWindowView = itemLongClickedPopWindowInflater.inflate
-                        (R.layout.popup_pic_longclick, null);
+                        (R.layout.pop_pic_longclick, null);
                 llPopupRoot = (LinearLayout) longClickedPopWindowView.findViewById(R.id
                         .ll_popup_root);
 

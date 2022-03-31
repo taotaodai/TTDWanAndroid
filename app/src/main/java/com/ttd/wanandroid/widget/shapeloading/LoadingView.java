@@ -75,7 +75,7 @@ public class LoadingView extends LinearLayout {
 
         setOrientation(VERTICAL);
         mDistance = dip2px(context, 54f);
-        LayoutInflater.from(context).inflate(R.layout.load_view, this, true);
+        LayoutInflater.from(context).inflate(R.layout.view_loading, this, true);
         mShapeLoadingView = (ShapeLoadingView) findViewById(R.id.shapeLoadingView);
         mIndicationIm = (ImageView) findViewById(R.id.indication);
         mLoadTextView = (TextView) findViewById(R.id.promptTV);

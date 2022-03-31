@@ -1,10 +1,11 @@
 package com.ttd.wanandroid
 
-import android.app.Application
 import android.content.Context
-import androidx.multidex.MultiDex
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.multidex.MultiDex
 import com.ttd.sdk.GlobalApplication
+import com.ttd.wanandroid.utils.MultiLanguageUtils
+import com.ttd.wanandroid.utils.SPDataUtils
 import com.ttd.wanandroid.widget.skin.support.SkinCircleImageViewInflater
 import skin.support.SkinCompatManager
 import skin.support.constraint.app.SkinConstraintViewInflater
@@ -24,6 +25,9 @@ class MyApplication:GlobalApplication(){
     override fun onCreate() {
         super.onCreate()
         initSkinSupport()
+
+        SPDataUtils.getInstance().initContext(this)
+        registerActivityLifecycleCallbacks(MultiLanguageUtils.callbacks)
     }
 
     private fun initSkinSupport() {

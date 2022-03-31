@@ -39,7 +39,6 @@ public abstract class BaseCompatActivity extends me.yokeyword.fragmentation.Supp
     protected GlobalApplication mApplication;
     protected Context mContext;//全局上下文对象
     protected boolean isTransAnim;
-    //    protected ImmersionBarImp immersionBarImp;
     protected ImmersionBar mImmersionBar;
     protected NetworkConnectChangedReceiver netWorkStateReceiver;
     protected boolean mCheckNetWork = true; //默认检查网络状态
@@ -131,7 +130,6 @@ public abstract class BaseCompatActivity extends me.yokeyword.fragmentation.Supp
     protected void initData() {
         mContext = AppUtils.getContext();
         mApplication = (GlobalApplication) getApplication();
-//        mWaitPorgressDialog = new WaitPorgressDialog(this);
         isTransAnim = true;
     }
 
@@ -141,12 +139,7 @@ public abstract class BaseCompatActivity extends me.yokeyword.fragmentation.Supp
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         toolbar.setNavigationIcon(R.drawable.ic_back);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressedSupport();
-            }
-        });
+        toolbar.setNavigationOnClickListener(view -> onBackPressedSupport());
     }
 
     public void startActivity(Class<?> clz, Bundle bundle) {

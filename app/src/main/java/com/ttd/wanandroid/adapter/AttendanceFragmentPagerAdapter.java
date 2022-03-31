@@ -15,8 +15,8 @@ import java.util.List;
 
 public class AttendanceFragmentPagerAdapter extends FragmentStatePagerAdapter {
 
-    private List<Fragment> fragments;
-    private String[] title;
+    private final List<Fragment> fragments;
+    private final String[] title;
 
     public AttendanceFragmentPagerAdapter(FragmentManager fm, List<Fragment> fragments, String[] title) {
         super(fm);
@@ -45,6 +45,6 @@ public class AttendanceFragmentPagerAdapter extends FragmentStatePagerAdapter {
     }
 
     @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
+    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
     }
 }

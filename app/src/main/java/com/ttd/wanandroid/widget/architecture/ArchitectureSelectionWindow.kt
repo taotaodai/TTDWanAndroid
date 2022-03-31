@@ -2,8 +2,6 @@ package com.ttd.wanandroid.widget.architecture
 
 import android.content.Context
 import android.graphics.drawable.ColorDrawable
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
@@ -31,7 +29,7 @@ class ArchitectureSelectionWindow(context: Context, data: ArchitectureBean) {
     var adapterSub: ArchitectureSubAdapter? = null
 
     fun init() {
-        rootView = LayoutInflater.from(context).inflate(R.layout.window_architectrue, null)
+        rootView = LayoutInflater.from(context).inflate(R.layout.pop_architectrue, null)
         rvTop = rootView!!.findViewById(R.id.rv_top)
         rvSub = rootView!!.findViewById(R.id.rv_sub)
 

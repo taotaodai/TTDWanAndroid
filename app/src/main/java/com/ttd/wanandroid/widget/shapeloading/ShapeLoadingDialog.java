@@ -28,7 +28,7 @@ public class ShapeLoadingDialog extends Dialog{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_dialog);
+        setContentView(R.layout.view_layout_dialog);
 
         mLoadingView = (LoadingView) findViewById(R.id.loadView);
 

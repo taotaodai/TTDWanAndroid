@@ -1,6 +1,8 @@
 package com.ttd.wanandroid.ui
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
@@ -33,7 +35,7 @@ import org.greenrobot.eventbus.ThreadMode
 class MainActivity : BaseCompatActivity(), BottomNavigationBar.OnTabSelectedListener {
 
     private var fragments: List<SupportFragment> = listOf()
-    private lateinit var dlMain: androidx.drawerlayout.widget.DrawerLayout
+    private lateinit var dlMain: DrawerLayout
     private lateinit var bnvMain: BottomNavigationView
     private lateinit var nvMain: NavigationView
     private var tvUserName: TextView? = null
@@ -42,6 +44,15 @@ class MainActivity : BaseCompatActivity(), BottomNavigationBar.OnTabSelectedList
     private val SECOND = 1
     private val THIRD = 2
     private val FOURTH = 3
+
+    companion object {
+        fun startChangeLanguage(context: Context) {
+            val intent = Intent(context, MainActivity::class.java)
+//        intent.putExtra(Constants.BundleKey.CHANGE_LANGUAGE, true)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            context.startActivity(intent)
+        }
+    }
 
     override fun initView(savedInstanceState: Bundle?) {
 //        EventBus.getDefault().register(this)
